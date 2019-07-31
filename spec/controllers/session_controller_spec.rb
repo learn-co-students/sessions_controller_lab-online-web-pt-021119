@@ -9,19 +9,19 @@ RSpec.describe SessionsController, type: :controller do
     end
 
     it 'redirects to login page if :name is empty' do
-      post :create, params: { name: '' }
+      post :create, name: ''
       expect(response).to redirect_to controller: 'sessions', action: 'new'
     end
 
     it 'sets session[:name] if :name was given' do
       me = 'Werner Brandes'
-      post :create, params: { name: me }
+      post :create, name: me
       expect(@request.session[:name]).to eq me
     end
 
     it 'redirects to "/" if logged in' do
       me = 'Werner Brandes'
-      post :create, params: { name: me }
+      post :create, name: me
       expect(response).to redirect_to('/')
     end
 
@@ -35,7 +35,7 @@ RSpec.describe SessionsController, type: :controller do
     end
 
     it 'clears session[:name] if it was set' do
-      post :create, params: { name: 'Trinity' }
+      post :create, name: 'Trinity'
       expect(@request.session[:name]).not_to be nil
       post :destroy
       expect(@request.session[:name]).to be nil
